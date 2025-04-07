@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-// Aquí conectaremos las rutas de eventos y asistentes
-// Ejemplo:
 router.get('/', (req, res) => {
     res.send('API funcionando correctamente');
 });
+
+router.use('/events', require('./events.routes'));
+router.use('/attendees', require('./attendees.routes'));
 
 module.exports = router;

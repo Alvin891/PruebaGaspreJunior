@@ -25,4 +25,16 @@ const getAttendeesByEvent = async (req, res) => {
     }
 };
 
-module.exports = { registerAttendeeToEvent, getAttendeesByEvent };
+const getEventsByAttendee = async (req, res) => {
+    const { attendeeId } = req.params;
+
+    try {
+        const events = await eventAttendeeService.getEventsByAttendee(attendeeId);
+        res.status(200).json(events);
+    } catch (error) {
+        console.error('Error al obtener eventos del asistente:', error);
+        res.status(500).json({ message: 'Error al obtener eventos del asistente' });
+    }
+};
+
+module.exports = { registerAttendeeToEvent, getAttendeesByEvent, getEventsByAttendee };

@@ -30,4 +30,21 @@ const getAttendeesByEvent = async (eventId) => {
     return attendees;
 };
 
-module.exports = { register, getAttendeesByEvent };
+const getEventsByAttendee = async (attendeeId) => {
+    const attendee = await Attendee.findByPk(attendeeId);
+    if (!attendee) {
+        throw new Error('Asistente no encontrado');
+    }
+
+    const events = await Event.findAll({
+        include: {
+            model: Attendee,
+            where: { id: attendeeId },
+            through: { attributes: [] }
+        }
+    });
+
+    return events;
+};
+
+module.exports = { register, getAttendeesByEvent, getEventsByAttendee };
